@@ -37,7 +37,7 @@ public class EchoClient {
                         }
                     });
 
-            ChannelFuture f = b.connect().sync();
+            final ChannelFuture f = b.connect().sync();
             f.addListener(new ChannelFutureListener() {
                 @Override
                 public void operationComplete(ChannelFuture channelFuture) throws Exception {
