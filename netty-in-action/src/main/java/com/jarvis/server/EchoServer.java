@@ -29,8 +29,8 @@ public class EchoServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
-                        protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new EchoServerHandler());
+                        protected void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(new EchoServerHandler());
 
                         }
                     });
@@ -40,7 +40,6 @@ public class EchoServer {
             f.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully().sync();
-
         }
 
     }

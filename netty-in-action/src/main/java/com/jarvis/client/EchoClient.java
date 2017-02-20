@@ -32,23 +32,12 @@ public class EchoClient {
                     .remoteAddress(new InetSocketAddress(host, port))
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new EchoClientHandler());
+                        protected void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(new EchoClientHandler());
                         }
                     });
 
             final ChannelFuture f = b.connect().sync();
-            f.addListener(new ChannelFutureListener() {
-                @Override
-                public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                    if(f.isSuccess()){
-                        System.out.println("client connected");
-                    }else{
-                        System.out.println("server attemp failed");
-                        f.cause().printStackTrace();
-                    }
-                }
-            });
             f.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully().sync();
